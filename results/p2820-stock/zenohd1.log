@@ -1,0 +1,2 @@
+[zenohd] stock - Datenlink-Interface eth0
+[2m2026-11-12T21:13:07.291748Z[0m [33m WARN[0m main ThreadId(01) [2mzenoh::net::routing::hat::peer[0m[2m:[0m Gossip is disabled: cannot de-duplicate data traversing region gateways

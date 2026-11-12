@@ -1,0 +1,15 @@
+[pico-sender] zenoh-pico client tcp/zenohd1:7447 key=video/ipad/h264
+[pico-sender] 83 frames, 3 key, 309 frags, zv-payload 517 kbit/s, put_errors 0
+[pico-sender] 158 frames, 6 key, 575 frags, zv-payload 490 kbit/s, put_errors 0
+[pico-sender] 233 frames, 8 key, 845 frags, zv-payload 479 kbit/s, put_errors 0
+[pico-sender] 308 frames, 11 key, 1114 frags, zv-payload 473 kbit/s, put_errors 0
+[pico-sender] 383 frames, 13 key, 1376 frags, zv-payload 468 kbit/s, put_errors 0
+[pico-sender] 458 frames, 16 key, 1651 frags, zv-payload 467 kbit/s, put_errors 0
+[pico-sender] 533 frames, 18 key, 1912 frags, zv-payload 465 kbit/s, put_errors 0
+[pico-sender] 608 frames, 21 key, 2190 frags, zv-payload 465 kbit/s, put_errors 0
+[pico-sender] 683 frames, 23 key, 2449 frags, zv-payload 463 kbit/s, put_errors 0
+[pico-sender] 758 frames, 26 key, 2721 frags, zv-payload 463 kbit/s, put_errors 0
+[pico-sender] 833 frames, 28 key, 2991 frags, zv-payload 462 kbit/s, put_errors 0
+[pico-sender] 908 frames, 31 key, 3257 frags, zv-payload 462 kbit/s, put_errors 0
+[pico-sender] 983 frames, 33 key, 3524 frags, zv-payload 461 kbit/s, put_errors 0
+[pico-sender] 1058 frames, 36 key, 3789 frags, zv-payload 461 kbit/s, put_errors 0

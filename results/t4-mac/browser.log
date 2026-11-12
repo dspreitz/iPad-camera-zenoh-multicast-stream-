@@ -1,0 +1,8 @@
+support {"webcodecs":true,"h264":true}
+t=5s {"wsMessages":87,"bytes":318133,"decoded":87,"keyframes":3,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":109,"fps":15.1,"reconnects":0,"webcodecs":true,"latRxP50":105,"latRxP95":633,"latDecP50":109,"latDecP95":646}
+t=10s {"wsMessages":163,"bytes":598590,"decoded":163,"keyframes":6,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":121,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":105,"latRxP95":108,"latDecP50":111,"latDecP95":119}
+t=15s {"wsMessages":238,"bytes":875410,"decoded":238,"keyframes":8,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":113,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":105,"latRxP95":108,"latDecP50":115,"latDecP95":121}
+t=20s {"wsMessages":313,"bytes":1151224,"decoded":313,"keyframes":11,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":112,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":105,"latRxP95":110,"latDecP50":116,"latDecP95":126}
+t=25s {"wsMessages":388,"bytes":1425893,"decoded":388,"keyframes":13,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":16,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":107,"latRxP95":111,"latDecP50":117,"latDecP95":129}
+t=30s {"wsMessages":463,"bytes":1702635,"decoded":463,"keyframes":16,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":5,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":11,"latRxP95":111,"latDecP50":25,"latDecP95":123}
+RESULT OK decoded=463 fps=15 errors=0

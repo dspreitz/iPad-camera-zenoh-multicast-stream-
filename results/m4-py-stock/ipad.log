@@ -1,0 +1,14 @@
+ffmpeg: ffmpeg -hide_banner -loglevel error -re -f lavfi -i testsrc2=size=640x360:rate=15 -vf scale=640:360,fps=15,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf:text='%{localtime\:%T} #%{n}':x=10:y=10:fontsize=24:fontcolor=white:box=1:boxcolor=black@0.6 -an -c:v libx264 -preset veryfast -tune zerolatency -profile:v baseline -pix_fmt yuv420p -g 30 -keyint_min 30 -sc_threshold 0 -b:v 450k -maxrate 450k -bufsize 270k -x264-params repeat-headers=1:aud=1 -f h264 -
+[sender] 72 frames (14.4 fps), 3 key, 274 frags, zv-payload 457 kbit/s, max AU 12090 B
+[sender] 148 frames (14.7 fps), 5 key, 544 frags, zv-payload 454 kbit/s, max AU 12090 B
+[sender] 224 frames (14.8 fps), 8 key, 813 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 300 frames (14.9 fps), 10 key, 1089 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 376 frames (14.9 fps), 13 key, 1356 frags, zv-payload 455 kbit/s, max AU 12090 B
+[sender] 451 frames (14.9 fps), 16 key, 1630 frags, zv-payload 457 kbit/s, max AU 12090 B
+[sender] 527 frames (14.9 fps), 18 key, 1891 frags, zv-payload 455 kbit/s, max AU 12090 B
+[sender] 603 frames (14.9 fps), 21 key, 2175 frags, zv-payload 457 kbit/s, max AU 12090 B
+[sender] 678 frames (14.9 fps), 23 key, 2435 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 754 frames (14.9 fps), 26 key, 2709 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 830 frames (14.9 fps), 28 key, 2975 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 906 frames (14.9 fps), 31 key, 3248 frags, zv-payload 456 kbit/s, max AU 12090 B
+[sender] 981 frames (15.0 fps), 33 key, 3516 frags, zv-payload 456 kbit/s, max AU 12090 B

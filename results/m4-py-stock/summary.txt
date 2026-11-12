@@ -1,0 +1,14 @@
+[run] Lauf m4-py-stock: SENDER=py ZENOHD=stock DURATION=60s ORDER=sender-last LINK_MTU=1500 NETEM='' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth1 LAN=eth0
+[run] Messdauer 61s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           499.0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              489.5 kbit/s, 54 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              489.5 kbit/s, 54 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      493.1 kbit/s
+[run] Datenlink-tcpdump: 3229 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [sender] 981 frames (15.0 fps), 33 key, 3516 frags, zv-payload 456 kbit/s, max AU 12090 B
+[run] Bridge:  {"fragments": 3749, "bytes": 3985030, "frames": 1047, "keyframes": 35, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 445.6, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 4, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=930 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":930,"bytes":3497771,"decoded":930,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":3,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":5,"latRxP95":7,"latDecP50":10,"latDecP95":15}
+[run] Ergebnisse: results/m4-py-stock

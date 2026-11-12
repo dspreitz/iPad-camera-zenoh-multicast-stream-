@@ -1,0 +1,9 @@
+[harness] zenoh: connecting
+[harness] zenoh: connected
+[harness] 75 frames (15.0 fps), 3 key, Encoder 443 kbit/s, max AU 7720 B | zenoh: 267 frags, 450 kbit/s, put_errors 0, verworfen 0
+[harness] 151 frames (15.0 fps), 6 key, Encoder 441 kbit/s, max AU 7720 B | zenoh: 531 frags, 448 kbit/s, put_errors 0, verworfen 0
+[harness] 226 frames (15.0 fps), 8 key, Encoder 440 kbit/s, max AU 7720 B | zenoh: 791 frags, 447 kbit/s, put_errors 0, verworfen 0
+[harness] 302 frames (15.0 fps), 11 key, Encoder 441 kbit/s, max AU 7720 B | zenoh: 1059 frags, 447 kbit/s, put_errors 0, verworfen 0
+[harness] 377 frames (15.0 fps), 13 key, Encoder 440 kbit/s, max AU 7720 B | zenoh: 1322 frags, 447 kbit/s, put_errors 0, verworfen 0
+[harness] 452 frames (15.0 fps), 16 key, Encoder 440 kbit/s, max AU 7720 B | zenoh: 1585 frags, 447 kbit/s, put_errors 0, verworfen 0
+[harness] 527 frames (15.0 fps), 18 key, Encoder 440 kbit/s, max AU 7720 B | zenoh: 1851 frags, 447 kbit/s, put_errors 0, verworfen 0

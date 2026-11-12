@@ -1,0 +1,11 @@
+# ipadvid-sender: iPad-Simulator (ffmpeg-Testbild -> H.264 ~450 kbit/s -> zenoh-python Peer, UDP-Multicast).
+# Build: docker build -f docker/Dockerfile.sender -t ipadvid-sender .
+FROM python:3.12-slim-bookworm
+ARG ZENOH_VERSION=1.10.2
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg fonts-dejavu-core tcpdump iproute2 procps \
+ && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir "eclipse-zenoh==${ZENOH_VERSION}"
+WORKDIR /app
+COPY config/ /app/config/
+COPY sender/*.py /app/sender/

@@ -1,0 +1,33 @@
+// zenoh-Konfiguration für die Rust-basierten Peers (Bridge im Anzeige-Container, Python-Sender-Simulator).
+// Grundsätze wie ~/Desktop/zenoh/zenohd.json5 (Hauptprojekt):
+//  - Peer-Modus (Multicast funktioniert in 1.10.x nur zwischen Peers),
+//  - kein Scouting/Gossip (sonst entstehen zusätzliche TCP-Verbindungen),
+//  - Batching aus, Sende-Queue 16.
+// NEU hier: batch_size 1472.
+//  - Rust-zenoh verwirft Multicast-Joins, deren batch_size nicht EXAKT der eigenen entspricht
+//    (multicast/rx.rs: "Ignoring Join ... Unsupported Batch Size"). Eigener Wert = min(batch_size, MTU, 8192).
+//  - zenoh-pico (iPad) wird mit BATCH_MULTICAST_SIZE=1472 gebaut -> beide Seiten müssen 1472 haben.
+//    (Defaults passen NICHT zusammen: zenoh-pico 2048, Rust 8192.)
+//  - 1472 = 1500 (Ethernet-MTU) - 20 (IP) - 8 (UDP): kein Datagramm wird IP-fragmentiert.
+// Multicast-Gruppe 224.0.0.226 statt .225, damit der Videostrom nicht in die Gruppe der Missionscomputer gerät.
+// Interface und Gruppe überschreibt der Container per ZV_IFACE/ZV_GROUP (-> listen/endpoints).
+{
+  mode: "peer",
+  listen: { endpoints: ["udp/224.0.0.226:7447#iface=eth0"] },
+  scouting: {
+    multicast: { enabled: false },
+    gossip: { enabled: false },
+  },
+  transport: {
+    multicast: { join_interval: 2500 },
+    link: {
+      tx: {
+        batch_size: 1472,
+        queue: {
+          size: { data: 16 },
+          batching: { enabled: false },
+        },
+      },
+    },
+  },
+}

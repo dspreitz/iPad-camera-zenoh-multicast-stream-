@@ -1,0 +1,8 @@
+ios/build/
+ios/ZenohPico.xcframework/
+ios/*.xcodeproj/
+results/*/link.pcap
+__pycache__/
+
+# Lokal gebautes zenohd-Binary (siehe README, nicht einchecken)
+third_party/zenohd-*

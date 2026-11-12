@@ -1,0 +1,24 @@
+# ipadvid-pico: iPad-Simulator mit zenoh-pico (C) - derselbe C-Kern (sender/csrc) wie in der iPad-App.
+# Build: docker build -f docker/Dockerfile.pico -t ipadvid-pico .   (setzt ipadvid-sender voraus, wegen ffmpeg)
+FROM debian:bookworm AS build
+ARG ZENOH_PICO_VERSION=1.10.2
+# Multicast-Batch auf Ethernet-MTU begrenzen: größere zenoh-Nachrichten fragmentiert zenoh-pico selbst
+# (unsere zv-Fragmente sind ohnehin < 1300 B, das ist nur die Sicherheitsleine gegen IP-Fragmentierung).
+ARG BATCH_MULTICAST_SIZE=1472
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl cmake make gcc libc6-dev \
+ && rm -rf /var/lib/apt/lists/*
+WORKDIR /src
+RUN curl -fsSL https://github.com/eclipse-zenoh/zenoh-pico/archive/refs/tags/${ZENOH_PICO_VERSION}.tar.gz | tar xz \
+ && cmake -S zenoh-pico-${ZENOH_PICO_VERSION} -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=OFF -DBATCH_MULTICAST_SIZE=${BATCH_MULTICAST_SIZE} 2>&1 | grep -E "size|MULTICAST|Configuring for" \
+ && cmake --build build -j4 && cmake --install build --prefix /opt/zp \
+ && cp build/include/zenoh-pico/config.h /opt/zp/config.generated.h 2>/dev/null || true
+COPY sender/csrc/ /src/csrc/
+RUN gcc -O2 -Wall -Wextra -DZENOH_LINUX -I/opt/zp/include -o /zv_pico_sender csrc/main_stdin.c csrc/zv_sender.c \
+      /opt/zp/lib/libzenohpico.a -lpthread -lrt
+
+FROM ipadvid-sender
+COPY --from=build /zv_pico_sender /usr/local/bin/zv_pico_sender
+COPY --from=build /opt/zp/ /opt/zp/
+COPY sender/run_pico.sh /app/run_pico.sh
+ENTRYPOINT ["/bin/sh", "/app/run_pico.sh"]

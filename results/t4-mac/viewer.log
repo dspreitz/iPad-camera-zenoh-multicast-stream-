@@ -1,0 +1,13 @@
+[viewer] zenoh client -> tcp/zenohd2:7447, key video/ipad/h264
+[bridge] zenoh client->tcp/zenohd2:7447 subscribed video/ipad/h264; http :8080
+[bridge] viewer: http://<host>:8080/
+[bridge] {"fragments": 0, "bytes": 0, "frames": 0, "keyframes": 0, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 0.0, "fps": 0.0, "lat_ms_p50": null, "lat_ms_p95": null, "waiting_for_keyframe": true, "clients": 0}
+[bridge] {"fragments": 267, "bytes": 282018, "frames": 75, "keyframes": 3, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 451.2, "fps": 15.0, "lat_ms_p50": 104, "lat_ms_p95": 106, "waiting_for_keyframe": false, "clients": 0}
+[bridge] client connected ::1, 1 total
+[bridge] {"fragments": 526, "bytes": 558472, "frames": 150, "keyframes": 5, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 442.3, "fps": 15.0, "lat_ms_p50": 103, "lat_ms_p95": 106, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 788, "bytes": 838017, "frames": 225, "keyframes": 8, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 447.3, "fps": 15.0, "lat_ms_p50": 103, "lat_ms_p95": 105, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1051, "bytes": 1117346, "frames": 300, "keyframes": 10, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 446.9, "fps": 15.0, "lat_ms_p50": 103, "lat_ms_p95": 105, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1315, "bytes": 1397417, "frames": 375, "keyframes": 13, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 448.1, "fps": 15.0, "lat_ms_p50": 105, "lat_ms_p95": 108, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1577, "bytes": 1675669, "frames": 450, "keyframes": 15, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 445.2, "fps": 15.0, "lat_ms_p50": 106, "lat_ms_p95": 110, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1844, "bytes": 1955507, "frames": 525, "keyframes": 18, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 453.6, "fps": 15.2, "lat_ms_p50": 8, "lat_ms_p95": 109, "waiting_for_keyframe": false, "clients": 1}
+[bridge] client gone, 0 total

@@ -1,0 +1,12 @@
+[run] Lauf p2820-stock: SENDER=pico ZENOHD=stock DURATION=20s ORDER=sender-last LINK_MTU=1500 NETEM='' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] Messdauer 20s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           .4 kbit/s
+[run] zenohd1 -> Datenlink (tx):              .2 kbit/s, 0 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              .2 kbit/s, 0 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      .4 kbit/s
+[run] Datenlink-tcpdump: 15 UDP-Pakete, max. UDP-Länge 33 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 386 frames, 13 key, 1385 frags, zv-payload 472 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 0, "bytes": 0, "frames": 0, "keyframes": 0, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 0.0, "fps": 0.0, "lat_ms_p50": null, "lat_ms_p95": null, "waiting_for_keyframe": true, "clients": 0}
+[run] Ergebnisse: results/p2820-stock

@@ -1,0 +1,12 @@
+[run] Lauf p2820-patched: SENDER=pico ZENOHD=patched DURATION=20s ORDER=sender-last LINK_MTU=1500 NETEM='' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] Messdauer 20s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           502.0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              495.3 kbit/s, 55 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              497.1 kbit/s, 55 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      501.7 kbit/s
+[run] Datenlink-tcpdump: 1063 UDP-Pakete, max. UDP-Länge 1243 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 377 frames, 13 key, 1362 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 1621, "bytes": 1714663, "frames": 450, "keyframes": 15, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 448.6, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Ergebnisse: results/p2820-patched

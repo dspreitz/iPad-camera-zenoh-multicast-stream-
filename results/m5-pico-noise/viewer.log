@@ -1,0 +1,19 @@
+[viewer] zenoh client -> tcp/zenohd2:7447, key video/ipad/h264
+[bridge] zenoh client->tcp/zenohd2:7447 subscribed video/ipad/h264; http :8080
+[bridge] viewer: http://<host>:8080/
+[bridge] {"fragments": 103, "bytes": 108573, "frames": 28, "keyframes": 1, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 173.7, "fps": 5.6, "lat_ms_p50": 2, "lat_ms_p95": 10, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 375, "bytes": 398752, "frames": 103, "keyframes": 4, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 464.3, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[bridge] client connected ::1, 1 total
+[bridge] {"fragments": 640, "bytes": 680862, "frames": 178, "keyframes": 6, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 451.4, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 911, "bytes": 969088, "frames": 253, "keyframes": 9, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 461.2, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1172, "bytes": 1249620, "frames": 328, "keyframes": 11, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 448.9, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1446, "bytes": 1540710, "frames": 403, "keyframes": 14, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 465.7, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1715, "bytes": 1824252, "frames": 478, "keyframes": 16, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 453.7, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 1983, "bytes": 2106743, "frames": 553, "keyframes": 19, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 452.0, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 2251, "bytes": 2390656, "frames": 628, "keyframes": 21, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 454.3, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 2521, "bytes": 2679979, "frames": 703, "keyframes": 24, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 462.9, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 2788, "bytes": 2966687, "frames": 778, "keyframes": 26, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 458.7, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 3052, "bytes": 3248248, "frames": 853, "keyframes": 29, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 450.5, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 3320, "bytes": 3531426, "frames": 928, "keyframes": 31, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 453.1, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] {"fragments": 3588, "bytes": 3821238, "frames": 1003, "keyframes": 34, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 463.7, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 1}
+[bridge] client gone, 0 total

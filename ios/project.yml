@@ -1,0 +1,43 @@
+# XcodeGen-Projektbeschreibung (https://github.com/yonaskolb/XcodeGen).
+#   brew install xcodegen
+#   ./scripts/build-zenoh-pico.sh      # einmalig: ZenohPico.xcframework
+#   xcodegen generate                  # erzeugt ZenohCam.xcodeproj
+name: ZenohCam
+options:
+  bundleIdPrefix: de.example.zenohcam   # ANPASSEN (eindeutig je Team)
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: ""                 # ANPASSEN: eigenes Team (Personal Team reicht für TCP-Betrieb)
+targets:
+  ZenohCam:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: ZenohCam
+      - path: ../sender/csrc/zv_sender.c
+      - path: ../sender/csrc/zv_sender.h
+    dependencies:
+      - framework: ZenohPico.xcframework
+        embed: false
+      - sdk: VideoToolbox.framework
+      - sdk: AVFoundation.framework
+      - sdk: CoreMedia.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.example.zenohcam
+        INFOPLIST_FILE: ZenohCam/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ZenohCam/ZenohCam.entitlements
+        CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: "2"          # nur iPad
+        SWIFT_OBJC_BRIDGING_HEADER: ZenohCam/ZenohCam-Bridging-Header.h
+        HEADER_SEARCH_PATHS:
+          - $(SRCROOT)/../sender/csrc
+          - $(SRCROOT)/ThirdParty/zenoh-pico-config
+          - $(SRCROOT)/ThirdParty/zenoh-pico/include
+        GCC_PREPROCESSOR_DEFINITIONS:
+          - ZENOH_MACOS=1                    # BSD-Socket-Schicht von zenoh-pico (passt für iOS)
+          - $(inherited)

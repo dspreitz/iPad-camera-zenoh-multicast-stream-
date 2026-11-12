@@ -1,0 +1,14 @@
+[run] Lauf m10-mac-harness: SENDER=mac ZENOHD=stock DURATION=60s ORDER=sender-last LINK_MTU=1500 NETEM='' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth1 LAN=eth0
+[run] Messdauer 61s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              487.5 kbit/s, 69 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              479.3 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      483.4 kbit/s
+[run] Datenlink-tcpdump: 3180 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [harness] 981 frames (15.0 fps), 33 key, Encoder 441 kbit/s, max AU 7965 B | zenoh: 3456 frags, 448 kbit/s, put_errors 0, verworfen 0
+[run] Bridge:  {"fragments": 3618, "bytes": 3832540, "frames": 1027, "keyframes": 35, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 442.0, "fps": 14.8, "lat_ms_p50": 95, "lat_ms_p95": 97, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=910 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":910,"bytes":3351164,"decoded":910,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":98,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":98,"latRxP95":100,"latDecP50":103,"latDecP95":107}
+[run] Ergebnisse: results/m10-mac-harness

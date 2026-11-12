@@ -1,0 +1,14 @@
+[run] Lauf m7-pico-loss5: SENDER=pico ZENOHD=stock DURATION=60s ORDER=sender-last LINK_MTU=1500 NETEM='loss 5%' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] Messdauer 61s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           498.0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              460.5 kbit/s, 51 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              459.5 kbit/s, 51 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      464.1 kbit/s
+[run] Datenlink-tcpdump: 3053 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1058 frames, 36 key, 3789 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3587, "bytes": 3812826, "frames": 81, "keyframes": 16, "lost_frames": 193, "skipped": 788, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 435.6, "fps": 2.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": true, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT FAIL decoded=78 fps=3 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":78,"bytes":367980,"decoded":78,"keyframes":14,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":6,"fps":3,"reconnects":0,"webcodecs":true,"latRxP50":4,"latRxP95":588,"latDecP50":8,"latDecP95":602}
+[run] Ergebnisse: results/m7-pico-loss5

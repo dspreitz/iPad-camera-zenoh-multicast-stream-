@@ -1,0 +1,7 @@
+zv: deklarierter Publisher (Test #2820)
+[pico-sender] zenoh-pico client tcp/zenohd1:7447 key=video/ipad/h264
+[pico-sender] 77 frames, 3 key, 296 frags, zv-payload 484 kbit/s, put_errors 0
+[pico-sender] 151 frames, 6 key, 556 frags, zv-payload 470 kbit/s, put_errors 0
+[pico-sender] 226 frames, 8 key, 821 frags, zv-payload 464 kbit/s, put_errors 0
+[pico-sender] 302 frames, 11 key, 1102 frags, zv-payload 466 kbit/s, put_errors 0
+[pico-sender] 377 frames, 13 key, 1362 frags, zv-payload 461 kbit/s, put_errors 0

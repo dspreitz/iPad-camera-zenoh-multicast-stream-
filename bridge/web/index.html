@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>iPad-Kamera</title>
+<style>
+  :root { --bg:#111; --fg:#eee; --muted:#9a9a9a; --ok:#4caf50; --warn:#ffb300; --err:#ef5350; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui, sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:16px; }
+  canvas { width:100%; height:auto; background:#000; display:block; aspect-ratio:16/9; }
+  #stats { font:12px/1.5 ui-monospace, monospace; color:var(--muted); margin-top:8px; white-space:pre-wrap; }
+  #state { font-weight:600; }
+  .ok { color:var(--ok);} .warn { color:var(--warn);} .err { color:var(--err);}
+</style>
+</head>
+<body>
+<main>
+  <h1 style="font-size:18px;margin:0 0 8px">iPad-Kamera über zenoh <span id="state" class="warn">verbinde…</span></h1>
+  <canvas id="c" width="640" height="360"></canvas>
+  <div id="stats"></div>
+</main>
+<script src="viewer.js"></script>
+</body>
+</html>

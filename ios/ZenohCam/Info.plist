@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key><string>de</string>
+	<key>CFBundleDisplayName</key><string>ZenohCam</string>
+	<key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+	<key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key><string>APPL</string>
+	<key>CFBundleShortVersionString</key><string>0.1</string>
+	<key>CFBundleVersion</key><string>1</string>
+	<key>LSRequiresIPhoneOS</key><true/>
+	<!-- Pflicht: sonst beendet iOS die App beim Kamerazugriff -->
+	<key>NSCameraUsageDescription</key><string>Das Kamerabild wird per zenoh an die Anzeige gestreamt.</string>
+	<!-- Pflicht ab iOS 14 für Verbindungen ins lokale Netz (zenoh-Server 1); löst den Dialog "Lokales Netzwerk" aus -->
+	<key>NSLocalNetworkUsageDescription</key><string>Die App sendet das Kamerabild an den zenoh-Server im lokalen Netz.</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
+	<key>UILaunchScreen</key><dict/>
+	<key>UIRequiresFullScreen</key><true/>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array><string>UIInterfaceOrientationLandscapeRight</string></array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array><string>UIInterfaceOrientationLandscapeRight</string></array>
+</dict>
+</plist>

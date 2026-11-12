@@ -1,0 +1,25 @@
+# ipadvid-zenohd: die beiden "bestehenden" zenoh-Server (zenohd 1.10.1, Peer-Modus, UDP-Multicast über den Datenlink).
+#   docker build -f docker/Dockerfile.zenohd -t ipadvid-zenohd:stock .
+#   docker build -f docker/Dockerfile.zenohd --build-arg VARIANT=patched -t ipadvid-zenohd:patched .
+# VARIANT=stock:   offizielles Release 1.10.1 (glibc, GitHub)
+# VARIANT=patched: zenohd 1.10.1 mit Fix 1-3 aus dem Hauptprojekt (GitHub-Actions-Artefakt, nur aarch64)
+FROM debian:bookworm-slim
+ARG VARIANT=stock
+ARG ZENOH_VERSION=1.10.1
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl unzip iproute2 tcpdump procps \
+ && rm -rf /var/lib/apt/lists/*
+# third_party/ is in the repo (README only); the patched binary is not checked in, see third_party/README.md.
+COPY third_party/ /tmp/third_party/
+RUN if [ "$VARIANT" = "patched" ]; then \
+      test -f /tmp/third_party/zenohd-1.10.1-patched-aarch64 \
+        || { echo "third_party/zenohd-1.10.1-patched-aarch64 fehlt, siehe third_party/README.md" >&2; exit 1; }; \
+      mv /tmp/third_party/zenohd-1.10.1-patched-aarch64 /usr/local/bin/zenohd; \
+    else \
+      case "$(uname -m)" in aarch64) t=aarch64-unknown-linux-gnu;; x86_64) t=x86_64-unknown-linux-gnu;; esac; \
+      curl -fsSL -o /tmp/z.zip "https://github.com/eclipse-zenoh/zenoh/releases/download/${ZENOH_VERSION}/zenoh-${ZENOH_VERSION}-${t}-standalone.zip" \
+      && unzip -j /tmp/z.zip zenohd -d /usr/local/bin && rm /tmp/z.zip; fi \
+ && rm -rf /tmp/third_party && chmod +x /usr/local/bin/zenohd && echo "$VARIANT" > /etc/zenohd-variant
+COPY config/zenohd-server.json5 /etc/zenohd.json5
+COPY docker/zenohd-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

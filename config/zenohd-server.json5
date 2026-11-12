@@ -1,0 +1,39 @@
+// Konfiguration der beiden zenoh-Server (zenohd 1.10.1) im Test.
+// Basis: ~/Desktop/zenoh/zenohd.json5 (Missionscomputer, Hauptprojekt) - unverändert bis auf den
+// TCP-Listener: dort nur 127.0.0.1, hier zusätzlich erreichbar für die Clients (iPad bzw. Anzeige-Container).
+//
+// Topologie:  iPad --TCP--> zenohd1 ==UDP-Multicast (Datenlink)==> zenohd2 <--TCP-- Anzeige-Container
+//
+// Im Echtbetrieb den TCP-Listener auf die IP des iPad-/Anzeige-Netzes binden (nicht 0.0.0.0),
+// damit die Server untereinander garantiert nur über Multicast reden.
+{
+  mode: "peer",
+  listen: {
+    endpoints: [
+      // Datenlink zum anderen Server (im Docker-Test: eth0 = Netz ipadvid-link)
+      "udp/224.0.0.225:7447#iface=eth0",
+      // Clients: iPad (Server 1) bzw. Anzeige-Container (Server 2)
+      "tcp/0.0.0.0:7447",
+    ],
+  },
+  scouting: {
+    multicast: { enabled: false },
+    gossip: { enabled: false },
+  },
+  transport: {
+    multicast: {
+      join_interval: 2500,
+      compression: { enabled: true },  // in 1.10.1 wirkungslos (gefixt in 1.10.2, #2821); H.264 ist ohnehin nicht komprimierbar
+    },
+    link: {
+      tx: {
+        batch_size: 1472,  // wirkt auf TCP-Links; Multicast siehe README (Join-Prüfung verlangt gleiche batch_size)
+        queue: {
+          size: { data: 16 },
+          batching: { enabled: false },
+        },
+      },
+    },
+  },
+  plugins_loading: { enabled: false },
+}

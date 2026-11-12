@@ -1,0 +1,133 @@
+=== RUN=m1-pico-stock SENDER=pico ZENOHD=stock DURATION=60
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           489.6 kbit/s
+[run] zenohd1 -> Datenlink (tx):              480.0 kbit/s, 52 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              479.1 kbit/s, 52 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      483.0 kbit/s
+[run] Datenlink-tcpdump: 3203 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1053 frames, 36 key, 3748 frags, zv-payload 459 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3778, "bytes": 4043993, "frames": 1062, "keyframes": 36, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 457.4, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=914 fps=15.9 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":914,"bytes":3432763,"decoded":914,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":6,"fps":15.9,"reconnects":0,"webcodecs":true,"latRxP50":3,"latRxP95":5,"latDecP50":7,"latDecP95":36}
+=== RUN=m2-pico-patched SENDER=pico ZENOHD=patched DURATION=60
+[run] Interfaces: zenohd1 Datenlink=eth1 WLAN=eth0 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           491.2 kbit/s
+[run] zenohd1 -> Datenlink (tx):              479.9 kbit/s, 53 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              480.1 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      484.1 kbit/s
+[run] Datenlink-tcpdump: 3217 UDP-Pakete, max. UDP-Länge 1243 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1057 frames, 36 key, 3774 frags, zv-payload 460 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3801, "bytes": 4053985, "frames": 1065, "keyframes": 36, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 458.1, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=917 fps=15.1 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":917,"bytes":3441498,"decoded":917,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":3,"fps":15.1,"reconnects":0,"webcodecs":true,"latRxP50":3,"latRxP95":5,"latDecP50":7,"latDecP95":12}
+=== RUN=m3-pico-senderfirst SENDER=pico ZENOHD=stock DURATION=60 ORDER=sender-first
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           497.9 kbit/s
+[run] zenohd1 -> Datenlink (tx):              488.1 kbit/s, 54 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              488.2 kbit/s, 54 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      492.0 kbit/s
+[run] Datenlink-tcpdump: 3209 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1126 frames, 38 key, 4029 frags, zv-payload 458 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3786, "bytes": 4035373, "frames": 1037, "keyframes": 35, "lost_frames": 0, "skipped": 26, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 448.4, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=920 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":920,"bytes":3450985,"decoded":920,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":2,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":3,"latRxP95":5,"latDecP50":7,"latDecP95":12}
+=== RUN=m4-py-stock SENDER=py ZENOHD=stock DURATION=60
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth1 LAN=eth0
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           499.0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              489.5 kbit/s, 54 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              489.5 kbit/s, 54 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      493.1 kbit/s
+[run] Datenlink-tcpdump: 3229 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [sender] 981 frames (15.0 fps), 33 key, 3516 frags, zv-payload 456 kbit/s, max AU 12090 B
+[run] Bridge:  {"fragments": 3749, "bytes": 3985030, "frames": 1047, "keyframes": 35, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 445.6, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 4, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=930 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":930,"bytes":3497771,"decoded":930,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":3,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":5,"latRxP95":7,"latDecP50":10,"latDecP95":15}
+=== RUN=m5-pico-noise SENDER=pico ZENOHD=stock DURATION=60 NOISE=10
+[run] Interfaces: zenohd1 Datenlink=eth1 WLAN=eth0 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           490.6 kbit/s
+[run] zenohd1 -> Datenlink (tx):              480.6 kbit/s, 53 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              479.4 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      483.6 kbit/s
+[run] Datenlink-tcpdump: 3227 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1058 frames, 36 key, 3785 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3797, "bytes": 4044996, "frames": 1062, "keyframes": 36, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 464.2, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=915 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":915,"bytes":3436622,"decoded":915,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":4,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":2,"latRxP95":3,"latDecP50":6,"latDecP95":10}
+=== RUN=m6-pico-loss1 SENDER=pico ZENOHD=stock DURATION=60 NETEM=loss 1%
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           497.6 kbit/s
+[run] zenohd1 -> Datenlink (tx):              483.5 kbit/s, 53 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              482.6 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      486.8 kbit/s
+[run] Datenlink-tcpdump: 3192 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1050 frames, 35 key, 3740 frags, zv-payload 456 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3749, "bytes": 4004992, "frames": 689, "keyframes": 33, "lost_frames": 29, "skipped": 342, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 450.7, "fps": 6.6, "lat_ms_p50": 2, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=627 fps=10 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":627,"bytes":2389585,"decoded":627,"keyframes":29,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":7,"fps":10,"reconnects":0,"webcodecs":true,"latRxP50":4,"latRxP95":5,"latDecP50":8,"latDecP95":11}
+=== RUN=m7-pico-loss5 SENDER=pico ZENOHD=stock DURATION=60 NETEM=loss 5%
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           498.0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              460.5 kbit/s, 51 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              459.5 kbit/s, 51 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      464.1 kbit/s
+[run] Datenlink-tcpdump: 3053 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1058 frames, 36 key, 3789 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3587, "bytes": 3812826, "frames": 81, "keyframes": 16, "lost_frames": 193, "skipped": 788, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 435.6, "fps": 2.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": true, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT FAIL decoded=78 fps=3 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":78,"bytes":367980,"decoded":78,"keyframes":14,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":6,"fps":3,"reconnects":0,"webcodecs":true,"latRxP50":4,"latRxP95":588,"latDecP50":8,"latDecP95":602}
+=== RUN=m8-pico-rate600k SENDER=pico ZENOHD=stock DURATION=60 NETEM=rate 600kbit delay 50ms
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           498.3 kbit/s
+[run] zenohd1 -> Datenlink (tx):              488.0 kbit/s, 54 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              488.1 kbit/s, 54 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      491.9 kbit/s
+[run] Datenlink-tcpdump: 3223 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1053 frames, 36 key, 3769 frags, zv-payload 459 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3794, "bytes": 4040761, "frames": 1061, "keyframes": 36, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 459.2, "fps": 15.0, "lat_ms_p50": 104, "lat_ms_p95": 195, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=913 fps=14.9 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":913,"bytes":3428717,"decoded":913,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":100,"fps":14.9,"reconnects":0,"webcodecs":true,"latRxP50":107,"latRxP95":191,"latDecP50":113,"latDecP95":200}
+=== RUN=m9-pico-mtu1280 SENDER=pico ZENOHD=stock DURATION=60 LINK_MTU=1280
+[run] Interfaces: zenohd1 Datenlink=eth1 WLAN=eth0 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           498.2 kbit/s
+[run] zenohd1 -> Datenlink (tx):              488.0 kbit/s, 53 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              487.1 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      491.9 kbit/s
+[run] Datenlink-tcpdump: 3214 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1060 frames, 36 key, 3779 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3789, "bytes": 4047227, "frames": 1063, "keyframes": 36, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 457.1, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 2, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=915 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":915,"bytes":3435230,"decoded":915,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":2,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":2,"latRxP95":4,"latDecP50":6,"latDecP95":10}
+=== RUN=m10-mac-harness SENDER=mac ZENOHD=stock DURATION=60
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth1 LAN=eth0
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              487.5 kbit/s, 69 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              479.3 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      483.4 kbit/s
+[run] Datenlink-tcpdump: 3180 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [harness] 981 frames (15.0 fps), 33 key, Encoder 441 kbit/s, max AU 7965 B | zenoh: 3456 frags, 448 kbit/s, put_errors 0, verworfen 0
+[run] Bridge:  {"fragments": 3618, "bytes": 3832540, "frames": 1027, "keyframes": 35, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 442.0, "fps": 14.8, "lat_ms_p50": 95, "lat_ms_p95": 97, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=910 fps=15 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":910,"bytes":3351164,"decoded":910,"keyframes":31,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":98,"fps":15,"reconnects":0,"webcodecs":true,"latRxP50":98,"latRxP95":100,"latDecP50":103,"latDecP95":107}
+=== RUN=m11-pico-noise-loss1 SENDER=pico ZENOHD=stock DURATION=60 NOISE=10 NETEM=loss 1%
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth1 LAN=eth0
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           496.7 kbit/s
+[run] zenohd1 -> Datenlink (tx):              481.5 kbit/s, 53 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              480.8 kbit/s, 53 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      485.1 kbit/s
+[run] Datenlink-tcpdump: 3211 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 986 frames, 33 key, 3536 frags, zv-payload 462 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 3762, "bytes": 3990321, "frames": 589, "keyframes": 31, "lost_frames": 38, "skipped": 431, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 464.9, "fps": 8.6, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=536 fps=9 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":536,"bytes":2060075,"decoded":536,"keyframes":27,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":9,"fps":9,"reconnects":0,"webcodecs":true,"latRxP50":4,"latRxP95":5,"latDecP50":8,"latDecP95":10}
+fertig: results/matrix-20261112-215751.txt

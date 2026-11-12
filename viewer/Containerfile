@@ -1,0 +1,29 @@
+# ipadvid-viewer: Anzeige-Seite als ein Container (Podman, auch mit Docker baubar).
+#   zenoh-Client (verbindet sich mit zenoh-Server 2) + Reassembly + WebSocket + Web-Viewer (WebCodecs)
+#
+# Build:  podman build -f viewer/Containerfile -t ipadvid-viewer .
+# Start:  podman run -d --name ipadvid-viewer -p 8080:8080 \
+#           -e ZV_CONNECT=tcp/<IP-von-zenoh-Server-2>:7447 ipadvid-viewer
+# Details: README.md, Abschnitt "Anzeige-Container (Podman)".
+FROM docker.io/library/python:3.12-slim-bookworm
+ARG ZENOH_VERSION=1.10.2
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openssl iproute2 \
+ && rm -rf /var/lib/apt/lists/* \
+ && pip install --no-cache-dir "eclipse-zenoh==${ZENOH_VERSION}" "aiohttp==3.10.11" \
+ && useradd -r -u 10001 -m viewer
+WORKDIR /app
+COPY config/peer-multicast.json5 /app/config/
+COPY sender/zvproto.py /app/sender/
+COPY bridge/ /app/bridge/
+COPY viewer/entrypoint.sh /app/entrypoint.sh
+RUN chmod 0755 /app/entrypoint.sh && mkdir -p /data && chown viewer /data
+USER viewer
+# ZV_CONNECT: zenoh-Server 2 (Client-Modus, Standard). host.containers.internal = Podman-Host
+# ZV_MODE=peer + ZV_IFACE/ZV_GROUP: stattdessen selbst Multicast-Peer sein (braucht --network host)
+# HTTPS=1:  selbstsigniertes Zertifikat erzeugen (WebCodecs braucht https, außer auf localhost)
+ENV ZV_MODE=client ZV_CONNECT=tcp/host.containers.internal:7447 ZV_IFACE=auto ZV_GROUP=224.0.0.226:7447 ZV_KEY=video/ipad/h264 HTTP_PORT=8080 HTTPS=0 \
+    STATS_FILE=/data/stats.json PYTHONUNBUFFERED=1
+EXPOSE 8080
+HEALTHCHECK --interval=15s --timeout=3s CMD python3 -c "import urllib.request,ssl,os;p=os.environ['HTTP_PORT'];s='https' if os.environ['HTTPS']=='1' else 'http';urllib.request.urlopen(f'{s}://127.0.0.1:{p}/stats',context=ssl._create_unverified_context())" || exit 1
+ENTRYPOINT ["/app/entrypoint.sh"]

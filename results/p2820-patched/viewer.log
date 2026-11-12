@@ -1,0 +1,9 @@
+[viewer] zenoh client -> tcp/zenohd2:7447, key video/ipad/h264
+[bridge] zenoh client->tcp/zenohd2:7447 subscribed video/ipad/h264; http :8080
+[bridge] viewer: http://<host>:8080/
+[bridge] {"fragments": 114, "bytes": 114922, "frames": 28, "keyframes": 1, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 183.9, "fps": 5.6, "lat_ms_p50": 2, "lat_ms_p95": 6, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 386, "bytes": 401926, "frames": 103, "keyframes": 4, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 459.2, "fps": 15.0, "lat_ms_p50": 1, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 648, "bytes": 685138, "frames": 178, "keyframes": 6, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 453.1, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 919, "bytes": 973104, "frames": 253, "keyframes": 9, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 460.7, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 8, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 1184, "bytes": 1251932, "frames": 328, "keyframes": 11, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 446.1, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}
+[bridge] {"fragments": 1461, "bytes": 1544390, "frames": 403, "keyframes": 14, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 467.9, "fps": 15.0, "lat_ms_p50": 2, "lat_ms_p95": 3, "waiting_for_keyframe": false, "clients": 0}

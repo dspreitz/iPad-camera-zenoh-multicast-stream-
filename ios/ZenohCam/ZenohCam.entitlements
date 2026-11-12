@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Keine besonderen Entitlements nötig: das iPad verbindet sich per TCP (Unicast) mit zenoh-Server 1.
+	     Nur falls das iPad SELBST Multicast-Peer sein soll (ZenohPublisher mode "peer"), wäre nötig:
+	     <key>com.apple.developer.networking.multicast</key><true/>
+	     (von Apple zu beantragen, nur mit bezahltem Developer-Account, nicht mit "Personal Team") -->
+</dict>
+</plist>

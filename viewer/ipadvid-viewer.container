@@ -1,0 +1,28 @@
+# Podman-Quadlet (systemd) für den Anzeige-Container - Autostart auf dem Rechner hinter zenoh-Server 2.
+# Rootless: nach ~/.config/containers/systemd/ kopieren, dann:
+#   systemctl --user daemon-reload && systemctl --user start ipadvid-viewer
+#   loginctl enable-linger $USER     # damit er ohne Anmeldung läuft
+# Root: nach /etc/containers/systemd/ kopieren, systemctl daemon-reload && systemctl start ipadvid-viewer
+[Unit]
+Description=iPad-Kamera Anzeige (zenoh -> WebCodecs)
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=localhost/ipadvid-viewer:latest
+ContainerName=ipadvid-viewer
+# zenoh-Server 2 läuft auf demselben Rechner: Host-Netz, Verbindung über Loopback
+# (zenohd.json5 der Missionscomputer lauscht nur auf tcp/127.0.0.1:7447 - passt ohne Änderung).
+Network=host
+Environment=ZV_CONNECT=tcp/127.0.0.1:7447
+Environment=ZV_KEY=video/ipad/h264
+Environment=HTTP_PORT=8080
+# HTTPS=1: nötig, wenn der Browser auf einem ANDEREN Rechner läuft (WebCodecs nur in "secure context").
+Environment=HTTPS=1
+Volume=ipadvid-viewer-data:/data
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
