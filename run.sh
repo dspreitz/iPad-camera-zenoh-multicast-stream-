@@ -12,7 +12,8 @@
 #   ORDER=sender-last|sender-first   Startreihenfolge (sender-first: Anzeige verbindet sich zuletzt)
 #   LINK_MTU=1500       MTU des Datenlinks
 #   NETEM=""            z.B. "loss 2%" oder "rate 1mbit delay 50ms" auf dem Datenlink (beide Richtungen)
-#   BITRATE_K=450 FPS=15 WIDTH=640 HEIGHT=360 GOP=30 NOISE=0   Video-Parameter
+#   BITRATE_K=220 FPS=10 WIDTH=640 HEIGHT=360 GOP=10 NOISE=0   Video-Parameter (GOP in Frames, 10 = 1 s)
+#   MAC_CAMERA=1        bei SENDER=mac die Mac-Kamera statt des Testbilds verwenden
 #   HEADLESS=1          Browser-Test (Frames zählen + Screenshot)
 #   KEEP=0              1 = Container nach dem Test laufen lassen (Viewer: http://localhost:8080/)
 set -euo pipefail
@@ -22,7 +23,7 @@ SENDER=${SENDER:-pico}; ZENOHD=${ZENOHD:-stock}; DURATION=${DURATION:-60}; ORDER
 LINK_MTU=${LINK_MTU:-1500}; NETEM=${NETEM:-}; HEADLESS=${HEADLESS:-1}; KEEP=${KEEP:-0}
 RUN=${RUN:-$(date +%Y%m%d-%H%M%S)-${SENDER}-${ZENOHD}}
 OUT=results/$RUN; mkdir -p "$OUT"
-VID_ENV=(-e BITRATE_K=${BITRATE_K:-450} -e FPS=${FPS:-15} -e WIDTH=${WIDTH:-640} -e HEIGHT=${HEIGHT:-360} -e GOP=${GOP:-30} -e NOISE=${NOISE:-0})
+VID_ENV=(-e BITRATE_K=${BITRATE_K:-220} -e FPS=${FPS:-10} -e WIDTH=${WIDTH:-640} -e HEIGHT=${HEIGHT:-360} -e GOP=${GOP:-10} -e NOISE=${NOISE:-0})
 
 log() { echo "[run] $*" | tee -a "$OUT/summary.txt"; }
 cleanup() {
@@ -56,7 +57,7 @@ start_viewer() {
 }
 start_sender() {
   if [ "$SENDER" = "mac" ]; then
-    ios/build/harness/zv-mac-harness tcp/127.0.0.1:17447 $((DURATION + 40)) ${BITRATE_K:-450} ${FPS:-15} > "$OUT/ipad.log" 2>&1 &
+    ios/build/harness/zv-mac-harness tcp/127.0.0.1:17447 $((DURATION + 40)) ${BITRATE_K:-220} ${FPS:-10} $([ "${MAC_CAMERA:-0}" = 1 ] && echo camera) > "$OUT/ipad.log" 2>&1 &
     MAC_PID=$!
   elif [ "$SENDER" = "py" ]; then
     docker run -d --name ipadvid-ipad --network ipadvid-wlan "${VID_ENV[@]}" -e ZV_CONNECT=tcp/zenohd1:7447 \

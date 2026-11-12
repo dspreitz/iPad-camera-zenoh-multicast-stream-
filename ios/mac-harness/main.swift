@@ -1,7 +1,7 @@
 // macOS-Test-Harness für den iPad-Code OHNE iPad/Xcode:
 // synthetische Kamerabilder (1280x720, wie AVCaptureSession .hd1280x720) -> H264Encoder (VideoToolbox, skaliert auf
 // 640x360) -> ZenohPublisher (zenoh-pico, C-Kern) -> zenoh-Server 1.
-// Aufruf: zv-mac-harness [locator=tcp/127.0.0.1:17447] [sekunden=30] [kbit=450] [fps=15] [camera]
+// Aufruf: zv-mac-harness [locator=tcp/127.0.0.1:17447] [sekunden=30] [kbit=220] [fps=10] [camera]
 //   "camera" = statt Testbild die Mac-Kamera über CameraCapture.swift (derselbe Code wie auf dem iPad;
 //   macOS fragt beim ersten Mal nach Kamerazugriff für das Terminal). Nicht automatisiert getestet.
 import AVFoundation
@@ -13,8 +13,8 @@ import Foundation
 let args = CommandLine.arguments
 let locator = args.count > 1 ? args[1] : "tcp/127.0.0.1:17447"
 let seconds = args.count > 2 ? Double(args[2])! : 30
-let kbit = args.count > 3 ? Int(args[3])! : 450
-let fps = args.count > 4 ? Int(args[4])! : 15
+let kbit = args.count > 3 ? Int(args[3])! : 220
+let fps = args.count > 4 ? Int(args[4])! : 10
 
 var cfg = H264Encoder.Config()
 cfg.bitrate = kbit * 1000

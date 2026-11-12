@@ -1,0 +1,14 @@
+[run] Lauf 20261112-225804-pico-stock: SENDER=pico ZENOHD=stock DURATION=60s ORDER=sender-last LINK_MTU=1500 NETEM='rate 250kbit' -e BITRATE_K=450 -e FPS=15 -e WIDTH=640 -e HEIGHT=360 -e GOP=30 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] Messdauer 62s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           492.1 kbit/s
+[run] zenohd1 -> Datenlink (tx):              248.6 kbit/s, 27 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              248.7 kbit/s, 27 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      250.7 kbit/s
+[run] Datenlink-tcpdump: 1662 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [pico-sender] 1058 frames, 36 key, 3772 frags, zv-payload 461 kbit/s, put_errors 0
+[run] Bridge:  {"fragments": 1940, "bytes": 2068845, "frames": 540, "keyframes": 18, "lost_frames": 0, "skipped": 0, "bad": 0, "late": 0, "restarts": 0, "zv_kbit_s": 234.9, "fps": 7.2, "lat_ms_p50": 33736, "lat_ms_p95": 34695, "waiting_for_keyframe": false, "clients": 0}
+[run] Browser: support {"webcodecs":true,"h264":true} RESULT OK decoded=497 fps=8 errors=0 
+[run] Browser letzte Stats: t=60s {"wsMessages":497,"bytes":1865514,"decoded":497,"keyframes":17,"decodeErrors":0,"dropped":0,"codec":"avc1.42c016","width":640,"height":360,"latencyMs":33970,"fps":8,"reconnects":0,"webcodecs":true,"latRxP50":29366,"latRxP95":33492,"latDecP50":29370,"latDecP95":33506}
+[run] Ergebnisse: results/20261112-225804-pico-stock

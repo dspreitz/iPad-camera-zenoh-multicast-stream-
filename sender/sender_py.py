@@ -2,7 +2,7 @@
 """iPad-Sender-Simulator (Python + zenoh-python).
 
 ffmpeg erzeugt ein Testbild (oder liest eine beliebige Quelle), kodiert H.264
-(Constrained Baseline, ~450 kbit/s) und schreibt Annex-B mit AUD-Trennern auf stdout.
+(Constrained Baseline, ~220 kbit/s) und schreibt Annex-B mit AUD-Trennern auf stdout.
 Dieses Skript zerlegt den Strom in Access Units, fragmentiert sie (zvproto) und
 publiziert jedes Fragment per session.put() über den zenoh-Peer (UDP-Multicast).
 """
@@ -81,9 +81,9 @@ def main():
     p.add_argument("--key", default=os.environ.get("ZV_KEY", "video/ipad/h264"))
     p.add_argument("--width", type=int, default=int(os.environ.get("WIDTH", 640)))
     p.add_argument("--height", type=int, default=int(os.environ.get("HEIGHT", 360)))
-    p.add_argument("--fps", type=int, default=int(os.environ.get("FPS", 15)))
-    p.add_argument("--gop", type=int, default=int(os.environ.get("GOP", 30)))
-    p.add_argument("--bitrate-k", type=int, default=int(os.environ.get("BITRATE_K", 450)))
+    p.add_argument("--fps", type=int, default=int(os.environ.get("FPS", 10)))
+    p.add_argument("--gop", type=int, default=int(os.environ.get("GOP", 10)))
+    p.add_argument("--bitrate-k", type=int, default=int(os.environ.get("BITRATE_K", 220)))
     p.add_argument("--noise", type=int, default=int(os.environ.get("NOISE", 0)))
     p.add_argument("--input", default=os.environ.get("INPUT", ""))
     p.add_argument("--max-payload", type=int, default=int(os.environ.get("MAX_PAYLOAD", zvproto.MAX_PAYLOAD)))

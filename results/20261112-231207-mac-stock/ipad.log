@@ -1,0 +1,15 @@
+[harness] zenoh: connecting
+[harness] zenoh: connected
+[harness] 145 frames (29.0 fps), 15 key, Encoder 225 kbit/s, max AU 26549 B | zenoh 230 kbit/s, verworfen 0
+[harness] 295 frames (29.5 fps), 30 key, Encoder 224 kbit/s, max AU 26549 B | zenoh 230 kbit/s, verworfen 0
+[harness] 445 frames (29.6 fps), 45 key, Encoder 222 kbit/s, max AU 26549 B | zenoh 228 kbit/s, verworfen 0
+[harness] 595 frames (29.7 fps), 60 key, Encoder 223 kbit/s, max AU 26549 B | zenoh 229 kbit/s, verworfen 0
+[harness] 746 frames (29.8 fps), 75 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 896 frames (29.8 fps), 90 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1046 frames (29.9 fps), 105 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1196 frames (29.9 fps), 120 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1346 frames (29.9 fps), 135 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1496 frames (29.9 fps), 150 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1646 frames (29.9 fps), 165 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1797 frames (29.9 fps), 180 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0
+[harness] 1947 frames (29.9 fps), 195 key, Encoder 221 kbit/s, max AU 26549 B | zenoh 227 kbit/s, verworfen 0

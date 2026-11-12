@@ -9,7 +9,7 @@ WebCodecs (VideoDecoder, Annex-B) und zeichnet auf ein <canvas>.
 Verlustbehandlung (Best-Effort-Multicast, keine Retransmission):
   - fehlt ein Fragment, ist der ganze Frame verloren;
   - nach einem verlorenen Frame wird bis zum nächsten Keyframe nichts weitergegeben
-    (sonst Artefakte/Decoderfehler). Mit GOP=2 s friert das Bild höchstens ~2 s ein.
+    (sonst Artefakte/Decoderfehler). Mit GOP=1 s friert das Bild höchstens ~1 s ein.
   - Neue Browser bekommen sofort die GOP seit dem letzten Keyframe (schneller Start).
 """
 import argparse

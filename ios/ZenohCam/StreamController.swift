@@ -11,8 +11,8 @@ final class StreamController: ObservableObject {
     // Einstellungen (persistiert)
     @Published var server: String = UserDefaults.standard.string(forKey: "server") ?? "tcp/192.168.1.10:7447"
     @Published var key: String = UserDefaults.standard.string(forKey: "key") ?? "video/ipad/h264"
-    @Published var bitrateKbit: Int = UserDefaults.standard.object(forKey: "kbit") as? Int ?? 450
-    @Published var fps: Int = UserDefaults.standard.object(forKey: "fps") as? Int ?? 15
+    @Published var bitrateKbit: Int = UserDefaults.standard.object(forKey: "kbit") as? Int ?? 220
+    @Published var fps: Int = UserDefaults.standard.object(forKey: "fps") as? Int ?? 10
 
     // Zustand
     @Published var running = false

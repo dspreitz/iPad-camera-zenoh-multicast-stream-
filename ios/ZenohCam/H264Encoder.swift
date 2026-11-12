@@ -8,10 +8,10 @@ final class H264Encoder {
     struct Config {
         var width = 640
         var height = 360
-        var fps = 15
-        var bitrate = 450_000          // bit/s, Mittelwert
-        var maxBitrate = 500_000       // bit/s, harte Grenze über 1 s (DataRateLimits)
-        var keyframeIntervalSec = 2.0  // max. Wartezeit nach Verlust bis zum Bild
+        var fps = 10
+        var bitrate = 220_000          // bit/s, Mittelwert
+        var maxBitrate = 250_000       // bit/s, harte Grenze über 1 s (DataRateLimits)
+        var keyframeIntervalSec = 1.0  // max. Wartezeit nach Verlust bis zum Bild
     }
 
     /// annexB, isKeyframe, ptsMs (Wanduhr bei Aufnahme, ms mod 2^32)
