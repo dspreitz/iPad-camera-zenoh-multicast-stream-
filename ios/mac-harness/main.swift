@@ -82,8 +82,8 @@ if args.count > 5 && args[5] == "camera" {
         Thread.sleep(forTimeInterval: 5)
         let el = Date().timeIntervalSince(t0); let st = publisher.stats()
         statLock.lock()
-        print(String(format: "[harness] %d frames (%.1f fps), %d key, Encoder %.0f kbit/s, max AU %d B | zenoh %.0f kbit/s, verworfen %d",
-                     frames, Double(frames) / el, keyframes, Double(bytes) * 8 / el / 1000, maxAU, Double(st.bytes) * 8 / el / 1000, publisher.droppedFrames))
+        print(String(format: "[harness] %d frames (%.1f fps), %d key, Encoder %.0f kbit/s, max AU %d B | zenoh %.0f kbit/s, verworfen %d, Kamera-Drosselung %d, Keyframe-Anforderungen %llu",
+                     frames, Double(frames) / el, keyframes, Double(bytes) * 8 / el / 1000, maxAU, Double(st.bytes) * 8 / el / 1000, publisher.droppedFrames, cam.droppedForRate, st.keyreqs))
         statLock.unlock(); fflush(stdout)
     }
     cam.stop(); encoder.invalidate(); publisher.stop(); Thread.sleep(forTimeInterval: 0.5)

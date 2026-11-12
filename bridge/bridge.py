@@ -9,8 +9,11 @@ WebCodecs (VideoDecoder, Annex-B) und zeichnet auf ein <canvas>.
 Verlustbehandlung (Best-Effort-Multicast, keine Retransmission):
   - fehlt ein Fragment, ist der ganze Frame verloren;
   - nach einem verlorenen Frame wird bis zum nächsten Keyframe nichts weitergegeben
-    (sonst Artefakte/Decoderfehler). Mit GOP=1 s friert das Bild höchstens ~1 s ein.
+    (sonst Artefakte/Decoderfehler). Ohne Rückkanal friert das Bild höchstens bis zum nächsten Keyframe ein (GOP 2 s).
   - Neue Browser bekommen sofort die GOP seit dem letzten Keyframe (schneller Start).
+  - Rückkanal: Muss die Bridge auf einen Keyframe warten (Verlust oder Start), fordert sie beim
+    Sender einen an (zenoh-put auf <key>/keyreq, höchstens alle 0,3 s). Damit endet ein Standbild
+    nach Verlust nach ~Laufzeit statt erst beim nächsten regulären Keyframe (GOP 2 s).
 """
 import argparse
 import asyncio
@@ -47,7 +50,8 @@ class Reassembler:
         self.need_key = True
         self.gop = []  # Frames seit letztem Keyframe (für neue Clients)
         self.st = dict(fragments=0, bytes=0, frames=0, keyframes=0, lost_frames=0, skipped=0,
-                       bad=0, late=0, restarts=0)
+                       bad=0, late=0, restarts=0, keyreqs=0)
+        self.keyreq_wanted = False  # wird vom Rückkanal-Thread abgearbeitet
         self.win = deque()  # (t, bytes) für Bitrate
         self.lat = deque()  # (t, latency_ms) Sender->Bridge (gleiche Uhr nur im Docker-Test)
         self.fps_win = deque()
@@ -101,6 +105,7 @@ class Reassembler:
             self.lat.append((t, lat))
         if self.need_key and not key:
             self.st["skipped"] += 1
+            self.keyreq_wanted = True
             return
         self.need_key = False
         self.st["frames"] += 1
@@ -243,6 +248,27 @@ def main():
     hub.reasm = Reassembler(hub.from_thread)
     session = zenoh.open(conf)
     sub = session.declare_subscriber(a.key, hub.reasm.on_sample)  # noqa: F841
+
+    keyreq_key = os.environ.get("ZV_KEYREQ_KEY", a.key + "/keyreq")
+
+    def keyreq_loop():
+        # session.put statt deklariertem Publisher: umgeht zenoh #2820 (Matching-Filter).
+        last = 0.0
+        while True:
+            time.sleep(0.05)
+            r = hub.reasm
+            if r.keyreq_wanted and time.time() - last >= 0.3:
+                r.keyreq_wanted = False
+                last = time.time()
+                try:
+                    session.put(keyreq_key, b"k")
+                    with r.lock:
+                        r.st["keyreqs"] += 1
+                except Exception as e:  # noqa: BLE001
+                    print(f"[bridge] keyreq fehlgeschlagen: {e}", flush=True)
+
+    if os.environ.get("ZV_KEYREQ", "1") != "0":
+        threading.Thread(target=keyreq_loop, daemon=True).start()
     print(f"[bridge] zenoh {'client->' + a.connect if a.connect else 'peer'} subscribed {a.key}; http :{a.port}",
           flush=True)
 

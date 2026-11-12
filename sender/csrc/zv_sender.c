@@ -1,5 +1,6 @@
 #include "zv_sender.h"
 
+#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +13,10 @@ struct zv_sender {
     // um zenoh #2820 (spät verbundener Client sieht Multicast-Subscriber nicht) mit zenoh-pico zu prüfen.
     z_owned_publisher_t pub;
     int use_pub;
+    z_owned_subscriber_t keyreq_sub;
+    int has_keyreq_sub;
+    atomic_uint keyreq_pending;
+    atomic_ullong keyreq_total;
     char key[256];
     int max_payload;
     uint32_t seq;
@@ -129,12 +134,37 @@ int zv_send_au(zv_sender_t *s, const uint8_t *au, size_t len, uint32_t pts_ms, i
     return errors ? -4 : 0;
 }
 
+static void keyreq_handler(z_loaned_sample_t *sample, void *ctx) {
+    (void)sample;
+    zv_sender_t *s = (zv_sender_t *)ctx;
+    atomic_fetch_add(&s->keyreq_pending, 1);
+    atomic_fetch_add(&s->keyreq_total, 1);
+}
+
+int zv_subscribe_keyreq(zv_sender_t *s, const char *key) {
+    if (!s || !key || s->has_keyreq_sub) return -1;
+    z_view_keyexpr_t vke;
+    if (z_view_keyexpr_from_str(&vke, key) < 0) return -2;
+    z_owned_closure_sample_t cb;
+    z_closure(&cb, keyreq_handler, NULL, s);
+    if (z_declare_subscriber(z_loan(s->session), &s->keyreq_sub, z_loan(vke), z_move(cb), NULL) < 0) return -3;
+    s->has_keyreq_sub = 1;
+    return 0;
+}
+
+uint32_t zv_take_keyreq(zv_sender_t *s) {
+    return s ? atomic_exchange(&s->keyreq_pending, 0) : 0;
+}
+
 void zv_get_stats(zv_sender_t *s, zv_stats_t *out) {
-    if (s && out) *out = s->st;
+    if (!s || !out) return;
+    *out = s->st;
+    out->keyreqs = atomic_load(&s->keyreq_total);
 }
 
 void zv_close(zv_sender_t *s) {
     if (!s) return;
+    if (s->has_keyreq_sub) z_drop(z_move(s->keyreq_sub));
     if (s->use_pub) z_drop(z_move(s->pub));
     z_drop(z_move(s->session));
     free(s->buf);

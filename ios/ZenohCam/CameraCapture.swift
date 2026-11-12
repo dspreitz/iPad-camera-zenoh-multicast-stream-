@@ -7,6 +7,11 @@ final class CameraCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     var onFrame: ((CVPixelBuffer, CMTime) -> Void)?
     private let queue = DispatchQueue(label: "camera.frames", qos: .userInitiated)
     private var configured = false
+    // Bildrate in Software begrenzen: Manche Kameras (z. B. die Mac-Kamera) ignorieren die
+    // eingestellte Bildrate und liefern 30 fps. Überzählige Bilder werden vor dem Encoder verworfen.
+    private var frameInterval = CMTime.invalid
+    private var nextDue = CMTime.invalid
+    private(set) var droppedForRate = 0
 
     static func requestAccess(_ done: @escaping (Bool) -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { ok in DispatchQueue.main.async { done(ok) } }
@@ -37,6 +42,7 @@ final class CameraCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
         // Bildrate fest einstellen (spart Energie und hält die Bitrate pro Bild konstant)
         try device.lockForConfiguration()
         let dur = CMTime(value: 1, timescale: CMTimeScale(fps))
+        frameInterval = dur
         if device.activeFormat.videoSupportedFrameRateRanges.contains(where: { $0.minFrameRate <= Double(fps) }) {
             device.activeVideoMinFrameDuration = dur
             device.activeVideoMaxFrameDuration = dur
@@ -62,6 +68,18 @@ final class CameraCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pb = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        onFrame?(pb, CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
+        let pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        if frameInterval.isValid {
+            // Toleranz von einem Viertel Intervall, damit leicht frühe Bilder nicht verworfen werden.
+            let tolerance = CMTimeMultiplyByFloat64(frameInterval, multiplier: 0.25)
+            if nextDue.isValid && CMTimeCompare(pts, CMTimeSubtract(nextDue, tolerance)) < 0 {
+                droppedForRate += 1
+                return
+            }
+            let next = nextDue.isValid ? CMTimeAdd(nextDue, frameInterval) : CMTimeAdd(pts, frameInterval)
+            // Nach einer Lücke nicht aufholen, sondern vom aktuellen Bild aus weiterzählen.
+            nextDue = CMTimeCompare(next, pts) <= 0 ? CMTimeAdd(pts, frameInterval) : next
+        }
+        onFrame?(pb, pts)
     }
 }

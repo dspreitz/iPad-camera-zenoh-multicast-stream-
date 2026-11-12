@@ -26,6 +26,7 @@ typedef struct {
     uint64_t fragments;
     uint64_t bytes;       // zv-Nutzlast inkl. 16-B-Header
     uint64_t put_errors;
+    uint64_t keyreqs;     // empfangene Keyframe-Anforderungen (Rückkanal)
 } zv_stats_t;
 
 // mode: "peer" (Multicast) oder "client"; locator z.B. "udp/224.0.0.226:7447#iface=en0"
@@ -36,6 +37,13 @@ zv_sender_t *zv_open(const char *mode, const char *locator, const char *key, int
 // flags: ZV_FLAG_* (0 = automatisch aus den NAL-Typen bestimmen). pace_us: Pause zwischen
 // Fragmenten (0 = keine) - glättet Keyframe-Bursts, nützlich im WLAN.
 int zv_send_au(zv_sender_t *s, const uint8_t *annexb, size_t len, uint32_t pts_ms, int flags, int pace_us);
+
+// Rückkanal: abonniert key (z.B. "video/ipad/h264/keyreq"). Jede eintreffende Nachricht zählt als
+// Keyframe-Anforderung (z.B. von der Bridge nach einem verlorenen Frame). 0 = ok.
+int zv_subscribe_keyreq(zv_sender_t *s, const char *key);
+// Liefert die Zahl der seit dem letzten Aufruf eingegangenen Anforderungen und setzt sie zurück.
+// Thread-sicher, blockiert nicht (kann vor jedem Encoder-Aufruf abgefragt werden).
+uint32_t zv_take_keyreq(zv_sender_t *s);
 
 void zv_get_stats(zv_sender_t *s, zv_stats_t *out);
 void zv_close(zv_sender_t *s);

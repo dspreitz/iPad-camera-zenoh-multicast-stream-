@@ -1,0 +1,21 @@
+[harness] zenoh: connecting
+[harness] zenoh: connected
+[harness] 49 frames (9.8 fps), 3 key, Encoder 210 kbit/s, max AU 13063 B | zenoh 213 kbit/s, verworfen 0, Kamera-Drosselung 96, Keyframe-Anforderungen 0
+[harness] 99 frames (9.9 fps), 5 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 196, Keyframe-Anforderungen 0
+[harness] 149 frames (9.9 fps), 8 key, Encoder 212 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 297, Keyframe-Anforderungen 0
+[harness] 199 frames (9.9 fps), 10 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 397, Keyframe-Anforderungen 0
+[harness] 249 frames (10.0 fps), 13 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 497, Keyframe-Anforderungen 0
+[harness] 299 frames (10.0 fps), 15 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 597, Keyframe-Anforderungen 0
+[harness] 349 frames (10.0 fps), 18 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 697, Keyframe-Anforderungen 0
+[harness] 399 frames (10.0 fps), 21 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 798, Keyframe-Anforderungen 4
+[harness] 449 frames (10.0 fps), 26 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 898, Keyframe-Anforderungen 12
+[harness] 499 frames (10.0 fps), 31 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 998, Keyframe-Anforderungen 19
+[harness] 549 frames (10.0 fps), 34 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 1098, Keyframe-Anforderungen 24
+[harness] 599 frames (10.0 fps), 37 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1198, Keyframe-Anforderungen 24
+[harness] 649 frames (10.0 fps), 41 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1298, Keyframe-Anforderungen 32
+[harness] 699 frames (10.0 fps), 43 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1398, Keyframe-Anforderungen 32
+[harness] 749 frames (10.0 fps), 48 key, Encoder 211 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1499, Keyframe-Anforderungen 37
+[harness] 799 frames (10.0 fps), 52 key, Encoder 212 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1599, Keyframe-Anforderungen 43
+[harness] 849 frames (10.0 fps), 55 key, Encoder 212 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1699, Keyframe-Anforderungen 44
+[harness] 899 frames (10.0 fps), 59 key, Encoder 212 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1799, Keyframe-Anforderungen 52
+[harness] 949 frames (10.0 fps), 62 key, Encoder 212 kbit/s, max AU 13063 B | zenoh 215 kbit/s, verworfen 0, Kamera-Drosselung 1899, Keyframe-Anforderungen 55

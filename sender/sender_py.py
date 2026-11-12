@@ -82,7 +82,7 @@ def main():
     p.add_argument("--width", type=int, default=int(os.environ.get("WIDTH", 640)))
     p.add_argument("--height", type=int, default=int(os.environ.get("HEIGHT", 360)))
     p.add_argument("--fps", type=int, default=int(os.environ.get("FPS", 10)))
-    p.add_argument("--gop", type=int, default=int(os.environ.get("GOP", 10)))
+    p.add_argument("--gop", type=int, default=int(os.environ.get("GOP", 20)))
     p.add_argument("--bitrate-k", type=int, default=int(os.environ.get("BITRATE_K", 220)))
     p.add_argument("--noise", type=int, default=int(os.environ.get("NOISE", 0)))
     p.add_argument("--input", default=os.environ.get("INPUT", ""))

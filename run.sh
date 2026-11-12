@@ -12,8 +12,9 @@
 #   ORDER=sender-last|sender-first   Startreihenfolge (sender-first: Anzeige verbindet sich zuletzt)
 #   LINK_MTU=1500       MTU des Datenlinks
 #   NETEM=""            z.B. "loss 2%" oder "rate 1mbit delay 50ms" auf dem Datenlink (beide Richtungen)
-#   BITRATE_K=220 FPS=10 WIDTH=640 HEIGHT=360 GOP=10 NOISE=0   Video-Parameter (GOP in Frames, 10 = 1 s)
+#   BITRATE_K=220 FPS=10 WIDTH=640 HEIGHT=360 GOP=20 NOISE=0   Video-Parameter (GOP in Frames, 20 = 2 s)
 #   MAC_CAMERA=1        bei SENDER=mac die Mac-Kamera statt des Testbilds verwenden
+#   KEYREQ=1            Rückkanal: Bridge fordert nach Verlust einen Keyframe an (0 = aus; wirkt nur bei SENDER=mac/iPad)
 #   HEADLESS=1          Browser-Test (Frames zählen + Screenshot)
 #   KEEP=0              1 = Container nach dem Test laufen lassen (Viewer: http://localhost:8080/)
 set -euo pipefail
@@ -23,7 +24,7 @@ SENDER=${SENDER:-pico}; ZENOHD=${ZENOHD:-stock}; DURATION=${DURATION:-60}; ORDER
 LINK_MTU=${LINK_MTU:-1500}; NETEM=${NETEM:-}; HEADLESS=${HEADLESS:-1}; KEEP=${KEEP:-0}
 RUN=${RUN:-$(date +%Y%m%d-%H%M%S)-${SENDER}-${ZENOHD}}
 OUT=results/$RUN; mkdir -p "$OUT"
-VID_ENV=(-e BITRATE_K=${BITRATE_K:-220} -e FPS=${FPS:-10} -e WIDTH=${WIDTH:-640} -e HEIGHT=${HEIGHT:-360} -e GOP=${GOP:-10} -e NOISE=${NOISE:-0})
+VID_ENV=(-e BITRATE_K=${BITRATE_K:-220} -e FPS=${FPS:-10} -e WIDTH=${WIDTH:-640} -e HEIGHT=${HEIGHT:-360} -e GOP=${GOP:-20} -e NOISE=${NOISE:-0})
 
 log() { echo "[run] $*" | tee -a "$OUT/summary.txt"; }
 cleanup() {
@@ -53,7 +54,7 @@ start_server() { # name zweitnetz
 }
 start_viewer() {
   docker run -d --name ipadvid-viewer --network ipadvid-lan -p 127.0.0.1:8080:8080 \
-    -e ZV_CONNECT=tcp/zenohd2:7447 ipadvid-viewer >/dev/null
+    -e ZV_CONNECT=tcp/zenohd2:7447 -e ZV_KEYREQ=${KEYREQ:-1} ipadvid-viewer >/dev/null
 }
 start_sender() {
   if [ "$SENDER" = "mac" ]; then

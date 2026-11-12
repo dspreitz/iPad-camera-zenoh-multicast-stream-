@@ -21,6 +21,11 @@ final class ZenohPublisher {
     private(set) var droppedFrames = 0
     private var lastStats = zv_stats_t()
     private var stopped = false
+    /// Sender-Zeiger für die Rückkanal-Abfrage von anderen Threads (unter `lock`).
+    private var keyreqSender: OpaquePointer?
+    private var lastKeyreqHonored = Date.distantPast
+    /// Mindestabstand zwischen zwei angeforderten Keyframes (mehrere Verluste kurz hintereinander -> ein Keyframe).
+    var keyreqMinInterval: TimeInterval = 0.5
 
     /// mode "client" + locator "tcp/<Server-1-IP>:7447" (Standard), oder "peer" + "udp/224.0.0.225:7447#iface=en0"
     init(mode: String = "client", locator: String, key: String) {
@@ -43,12 +48,26 @@ final class ZenohPublisher {
                 Thread.sleep(forTimeInterval: 2)
             }
         }
-        if sender != nil { onState?(.connected) }
+        if let s = sender {
+            // Rückkanal: Keyframe-Anforderungen der Anzeige (Bridge) nach Verlust
+            if zv_subscribe_keyreq(s, key + "/keyreq") != 0 { print("[zenoh] Rückkanal \(key)/keyreq nicht abonniert") }
+            lock.lock(); keyreqSender = s; lock.unlock()
+            onState?(.connected)
+        }
     }
 
     /// Thread-sicher; verwirft Frames, wenn mehr als ~1 s Rückstau entsteht.
     func send(annexB: Data, keyframe: Bool, ptsMs: UInt32, maxPending: Int = 15) {
         lock.lock()
+        // Keyframe-Anforderung vom Rückkanal -> Encoder liefert das nächste Bild als Keyframe
+        var keyRequested = false
+        if let s = keyreqSender, zv_take_keyreq(s) > 0, Date().timeIntervalSince(lastKeyreqHonored) >= keyreqMinInterval {
+            lastKeyreqHonored = Date()
+            keyRequested = true
+        }
+        if keyRequested {
+            lock.unlock(); onNeedKeyframe?(); lock.lock()
+        }
         if waitForKey && !keyframe {
             droppedFrames += 1
             lock.unlock()
@@ -85,6 +104,7 @@ final class ZenohPublisher {
 
     func stop() {
         stopped = true
+        lock.lock(); keyreqSender = nil; lock.unlock()
         queue.async {
             if let s = self.sender { zv_close(s) }
             self.sender = nil

@@ -14,7 +14,7 @@ Ziel: Eine App auf einem iPad mini streamt das Kamerabild mit ca. 500 kbit/s üb
 - **iPad-App:** Swift (AVCaptureSession → VideoToolbox-H.264 → **zenoh-pico** als Client per TCP zu Server 1). Encoder, Annex-B-Umsetzung und zenoh-pico-Sender sind **auf dem Mac getestet**, und zwar mit demselben Swift- und C-Code über einen Test-Harness. Ungetestet sind Kamera, UI und der Build für das Gerät, denn es gibt kein Xcode und kein iPad. Siehe [iPad-App](#ipad-app).
 - **Kein Multicast-Entitlement nötig:** Das iPad spricht nur Unicast-TCP mit Server 1. Multicast läuft ausschließlich zwischen den beiden Servern.
 
-- **Voreinstellung seit 12.11.2026: 220 kbit/s, 640×360 @ 10 fps, Keyframe alle 1 s** (App, Testsender, `run.sh`), ausgelegt für schmalbandige Datenlinks. Test gegen einen auf 250 kbit/s begrenzten Link: 450 kbit/s → 7 fps und > 30 s Verzögerung (Stau); 220 kbit/s → 10 fps, 142 ms (p50). Die Bitrate muss unter der tatsächlichen Link-Kapazität liegen.
+- **Voreinstellung seit 12.11.2026: 220 kbit/s, 640×360 @ 10 fps, Keyframe alle 2 s plus Keyframe-Anforderung nach Verlust** (App, Testsender, `run.sh`), ausgelegt für schmalbandige Datenlinks. Die App begrenzt die Bildrate in Software (Kameras ignorieren die Vorgabe teils). Test gegen einen auf 250 kbit/s begrenzten Link: 450 kbit/s → 7 fps und > 30 s Verzögerung (Stau); 220 kbit/s → 10 fps, 142 ms (p50). Die Bitrate muss unter der tatsächlichen Link-Kapazität liegen.
 
 ## Architektur
 
@@ -35,10 +35,10 @@ Ziel: Eine App auf einem iPad mini streamt das Kamerabild mit ca. 500 kbit/s üb
 | Alternative zenoh-c | nicht gewählt | Rust für `aarch64-apple-ios` wäre machbar, es gibt aber kein offizielles iOS-Paket und keine Swift-Bindings. Nötig wären Rust-Toolchain, cbindgen, eine große statische Lib (~20–30 MB) und ein eigenes XCFramework-Skript. Vorteil wäre nur die volle Feature-Parität, die hier nicht gebraucht wird. |
 | Rolle des iPad | **Client** per TCP zu Server 1 | Das ist die Topologie-Vorgabe. Kein Multicast auf dem iPad, also kein Entitlement. TCP sichert die WLAN-Strecke ab. |
 | Lizenz | zenoh-pico/zenoh: EPL-2.0 OR Apache-2.0 | Für eine interne App unkritisch. Bei Weitergabe Lizenztext beilegen. |
-| Video | H.264 Constrained Baseline, 640×360 @ 10 fps, Ziel 220 kbit/s, Obergrenze 250 kbit/s/s, Keyframe alle 1 s, kein B-Frame (bis 12.11.: 15 fps, 450/500 kbit/s, Keyframe 2 s) | Jeder Browser dekodiert das (WebCodecs `avc1.42c016`). Kleine Keyframes (5–12 KB). Nach einem Verlust steht das Bild höchstens 2 s. HEVC würde ~30 % sparen, die Browser-Unterstützung ist aber uneinheitlich (Firefox/Chrome unter Linux). |
+| Video | H.264 Constrained Baseline, 640×360 @ 10 fps, Ziel 220 kbit/s, Obergrenze 250 kbit/s/s, Keyframe alle 2 s, kein B-Frame; Rückkanal `<key>/keyreq` für Keyframe-Anforderungen (bis 12.11.: 15 fps, 450/500 kbit/s, ohne Rückkanal) | Jeder Browser dekodiert das (WebCodecs `avc1.42c016`). Kleine Keyframes (5–12 KB). Nach einem Verlust steht das Bild höchstens 2 s. HEVC würde ~30 % sparen, die Browser-Unterstützung ist aber uneinheitlich (Firefox/Chrome unter Linux). |
 | Paketierung | eigenes Mini-Protokoll „zv v1“: 16-B-Header + ≤ 1200 B Nutzlast pro zenoh-`put` | Jede zenoh-Nachricht bleibt < MTU, keine IP-Fragmentierung (siehe Multicast-Problematik im Hauptprojekt). Das gilt unabhängig von batch_size-Fehlern in zenoh. Der Empfänger setzt Frames wieder zusammen. Siehe [Protokoll](#protokoll-zv-v1). |
 | Senden | `session.put()` / `z_put()` ohne `declare_publisher` | Workaround für zenoh #2820: Ein spät verbundener Client sieht die Multicast-Subscriber nicht. Ein deklarierter Publisher würde sich dann für abnehmerlos halten und nichts senden. |
-| Verlust | Best Effort, `CongestionControl.DROP`, keine Retransmission | Fehlt ein Fragment, wird der ganze Frame verworfen. Danach wartet die Anzeige auf den nächsten Keyframe (≤ 1 s). Die Bridge sendet neuen Browsern sofort die GOP seit dem letzten Keyframe, das ergibt einen schnellen Start. |
+| Verlust | Best Effort, `CongestionControl.DROP`, keine Retransmission | Fehlt ein Fragment, wird der ganze Frame verworfen. Danach wartet die Anzeige auf den nächsten Keyframe; die Bridge fordert ihn per Rückkanal sofort an (höchstens alle 0,3 s, Sender honoriert höchstens alle 0,5 s). Die Bridge sendet neuen Browsern sofort die GOP seit dem letzten Keyframe, das ergibt einen schnellen Start. |
 | Browser-Weg | **eigene kleine Bridge** (Python, zenoh-Client + aiohttp-WebSocket) + **WebCodecs** | Wenig Code, niedrige Latenz (kein Puffer wie bei MSE/HLS), Reassembly und Keyframe-Logik serverseitig, GOP-Cache für schnellen Start. Vergleich: [Browser-Optionen](#browser-optionen). |
 | Anzeige-Container | `viewer/Containerfile` (Podman, auch Docker), Non-root, Healthcheck, optional HTTPS mit selbstsigniertem Zertifikat | Nutzervorgabe. WebCodecs gibt es nur auf `https://` oder `localhost`, deshalb HTTPS für entfernte Browser. |
 
@@ -172,10 +172,10 @@ Quellen in `ios/`. Der Status jedes Teils ist unten markiert.
 
 | Datei | Inhalt | Status |
 |---|---|---|
-| `ZenohCam/H264Encoder.swift` | VTCompressionSession: Low-Latency-Ratenregelung, Constrained Baseline, 220/250 kbit/s, Keyframe ≤ 1 s, kein Reordering. AVCC → Annex-B, SPS/PPS vor jedem Keyframe. Skaliert 1280×720 → 640×360. | **getestet auf macOS** (Harness, Hardware-Encoder des M2) |
+| `ZenohCam/H264Encoder.swift` | VTCompressionSession: Low-Latency-Ratenregelung, Constrained Baseline, 220/250 kbit/s, Keyframe ≤ 2 s (plus auf Anforderung), kein Reordering. AVCC → Annex-B, SPS/PPS vor jedem Keyframe. Skaliert 1280×720 → 640×360. | **getestet auf macOS** (Harness, Hardware-Encoder des M2) |
 | `ZenohCam/ZenohPublisher.swift` | Swift-Hülle um `zv_sender.c`: eigene Queue, Verbindungsaufbau mit Retry, Rückstau-Schutz (> 15 Frames → verwerfen bis Keyframe, Keyframe anfordern) | **getestet auf macOS** |
 | `../sender/csrc/zv_sender.c` | C-Kern: Fragmentierung, zenoh-pico-Client, `z_put` mit DROP | **getestet** (Linux-Docker + macOS) |
-| `ZenohCam/CameraCapture.swift` | AVCaptureSession, Rückkamera 1280×720, feste Bildrate (Voreinstellung 10 fps; greift auf der Mac-Kamera nicht), Querformat, Stabilisierung aus | typgeprüft (macOS-SDK), **auf dem iPad ungetestet** |
+| `ZenohCam/CameraCapture.swift` | AVCaptureSession, Rückkamera 1280×720, feste Bildrate (Voreinstellung 10 fps) und zusätzlich Software-Drosselung (überzählige Bilder werden vor dem Encoder verworfen, nötig z. B. bei der Mac-Kamera), Querformat, Stabilisierung aus | typgeprüft (macOS-SDK), **auf dem iPad ungetestet** |
 | `ZenohCam/StreamController.swift`, `ContentView.swift`, `ZenohCamApp.swift` | SwiftUI: Vorschau, Server-Adresse, Bitrate, Start/Stopp, Statistik, Display bleibt an | StreamController typgeprüft. UI **ungetestet** (UIKit nicht im macOS-SDK). |
 | `ZenohCam/Info.plist`, `ZenohCam.entitlements` | Kamera- und Local-Network-Texte (Pflicht), Landscape, nur iPad. Keine besonderen Entitlements. | ungetestet |
 | `project.yml` | XcodeGen: App-Target, Bridging-Header, Header-Pfade, `ZENOH_MACOS`, XCFramework | ungetestet |
@@ -296,6 +296,25 @@ Befunde dabei:
 
 - **Bildrate muss in der App erzwungen werden:** Mit 30 statt 10 fps entstehen mehr Pakete und mehr Overhead (Link ≈ 250–257 statt ≈ 234 kbit/s beim 10-fps-Testbild). Auf einem 250-kbit/s-Link wäre das wieder an der Grenze. → überzählige Frames vor dem Encoder verwerfen.
 - **Keyframes dominieren das Budget:** 26,5 KB je Sekunde ≈ 210 kbit/s → für P-Frames bleibt wenig, Bildqualität leidet. → Keyframe-Abstand eher 2 s, dafür Keyframe-Anforderung nach Verlust.
+
+## Bildraten-Drosselung und Keyframe-Rückkanal (2026-11-12)
+
+Änderungen: `CameraCapture.swift` verwirft überzählige Kamerabilder vor dem Encoder; Keyframe-Abstand 2 s;
+Rückkanal: die Bridge sendet `put` auf `<key>/keyreq`, sobald sie wegen Verlust auf einen Keyframe warten muss;
+`zv_sender.c` abonniert den Key (`zv_subscribe_keyreq`/`zv_take_keyreq`), `ZenohPublisher.swift` löst daraufhin
+`requestKeyframe()` aus. Abschaltbar mit `KEYREQ=0` (`run.sh`) bzw. `ZV_KEYREQ=0` (Viewer). Wirkt nur mit Sendern,
+die Keyframes auf Anforderung erzeugen können (App, Mac-Harness), nicht mit den ffmpeg-Testsendern.
+
+Mac-Kamera (`SENDER=mac MAC_CAMERA=1`), 220 kbit/s, je 30 s:
+
+| Phase | angezeigt | Keyframes / 30 s | verloren | übersprungen | Link rx | Latenz p50 |
+|---|---|---|---|---|---|---|
+| ohne Verlust | 10,1 fps | 15 (alle 2 s) | 0 | 0 | 231 kbit/s | 69 ms |
+| 2 % Verlust, mit Rückkanal | 8,3 fps | 22 (7 angefordert) | 16 | 35 | 227 kbit/s | 75 ms |
+| 2 % Verlust, ohne Rückkanal | 6,7 fps | 15 | 13 | 88 | 226 kbit/s | 83 ms |
+
+- Die Drosselung wirkt: 10 statt 30 fps (Kamera-Drosselung ≈ 2 von 3 Bildern), Link 231 statt ≈ 250 kbit/s, Keyframes ≤ 13 KB statt 26,5 KB.
+- Der Rückkanal reduziert die übersprungenen Frames bei 2 % Verlust um ≈ 60 % (35 statt 88) und hebt die angezeigte Bildrate von 6,7 auf 8,3 fps; Mehrkosten ≈ 7 zusätzliche Keyframes je 30 s bei unveränderter Link-Last.
 
 ## Fragen an den Nutzer
 

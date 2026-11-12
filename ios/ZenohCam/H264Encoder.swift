@@ -11,7 +11,7 @@ final class H264Encoder {
         var fps = 10
         var bitrate = 220_000          // bit/s, Mittelwert
         var maxBitrate = 250_000       // bit/s, harte Grenze über 1 s (DataRateLimits)
-        var keyframeIntervalSec = 1.0  // max. Wartezeit nach Verlust bis zum Bild
+        var keyframeIntervalSec = 2.0  // regulärer Abstand; nach Verlust fordert die Anzeige sofort einen Keyframe an
     }
 
     /// annexB, isKeyframe, ptsMs (Wanduhr bei Aufnahme, ms mod 2^32)

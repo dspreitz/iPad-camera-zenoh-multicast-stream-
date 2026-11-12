@@ -1,7 +1,7 @@
 #!/bin/sh
 # ffmpeg-Testbild -> H.264 (wie sender_py.py) -> zv_pico_sender (zenoh-pico)
 # Standard wie die iPad-App: Client-Modus, TCP zum zenoh-Server 1. Alternativ ZV_MODE=peer + Multicast-Locator.
-W=${WIDTH:-640}; H=${HEIGHT:-360}; FPS=${FPS:-10}; GOP=${GOP:-10}; BR=${BITRATE_K:-220}
+W=${WIDTH:-640}; H=${HEIGHT:-360}; FPS=${FPS:-10}; GOP=${GOP:-20}; BR=${BITRATE_K:-220}
 MODE=${ZV_MODE:-client}; LOC=${ZV_LOCATOR:-tcp/zenohd1:7447}; KEY=${ZV_KEY:-video/ipad/h264}
 FONT=/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf
 VF="fps=$FPS"; [ -n "$NOISE" ] && [ "$NOISE" != 0 ] && VF="$VF,noise=alls=$NOISE:allf=t"

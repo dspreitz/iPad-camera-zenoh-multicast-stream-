@@ -1,0 +1,13 @@
+[run] Lauf 20261112-232105-mac-stock: SENDER=mac ZENOHD=stock DURATION=90s ORDER=sender-last LINK_MTU=1500 NETEM='' -e BITRATE_K=220 -e FPS=10 -e WIDTH=640 -e HEIGHT=360 -e GOP=20 -e NOISE=0
+[run] Interfaces: zenohd1 Datenlink=eth0 WLAN=eth1 | zenohd2 Datenlink=eth0 LAN=eth1
+[run] Messdauer 91s
+[run] iPad -> zenohd1 (WLAN-Seite, rx):           0 kbit/s
+[run] zenohd1 -> Datenlink (tx):              228.2 kbit/s, 37 Pakete/s
+[run] Datenlink -> zenohd2 (rx):              222.5 kbit/s, 26 Pakete/s
+[run] zenohd2 -> Datenlink (Rückrichtung, tx): .2 kbit/s
+[run] zenohd2 -> Anzeige-Container (tx):      224.6 kbit/s
+[run] Datenlink-tcpdump: 2431 UDP-Pakete, max. UDP-Länge 1242 B, IP-Fragmente: 0
+[run] Sender:  [harness] 950 frames (10.0 fps), 48 key, Encoder 211 kbit/s, max AU 11899 B | zenoh 214 kbit/s, verworfen 0, Kamera-Drosselung 1899, Keyframe-Anforderungen 0
+[run] Bridge:  {"fragments": 2604, "bytes": 2573391, "frames": 581, "keyframes": 47, "lost_frames": 51, "skipped": 348, "bad": 0, "late": 0, "restarts": 0, "keyreqs": 0, "zv_kbit_s": 211.8, "fps": 7.6, "lat_ms_p50": 94, "lat_ms_p95": 96, "waiting_for_keyframe": false, "clients": 0}
+[run] Container laufen weiter: http://localhost:8080/  (Aufräumen: ./run.sh-cleanup oder docker rm -f ipadvid-...)
+[run] Ergebnisse: results/20261112-232105-mac-stock

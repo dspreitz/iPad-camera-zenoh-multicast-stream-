@@ -1,0 +1,1 @@
+{"fragments": 2604, "bytes": 2573391, "frames": 581, "keyframes": 47, "lost_frames": 51, "skipped": 348, "bad": 0, "late": 0, "restarts": 0, "keyreqs": 0, "zv_kbit_s": 211.8, "fps": 7.6, "lat_ms_p50": 94, "lat_ms_p95": 96, "waiting_for_keyframe": false, "clients": 0}
